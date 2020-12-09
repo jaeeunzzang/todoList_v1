@@ -1,6 +1,10 @@
 var total = 0; //리스트 갯수. 아이디에 추가해줄 변수
-
+var data = [
+  { id: 0, title: "test", complete: false },
+  { id: 1, title: "test2", complete: true },
+];
 function addNew() {
+  //추가버튼 눌럿을때
   //name, checked ->함수명: appendItem 체크가 된건지 안된건지만 중요,,...........
   var text = document.getElementById("addList").value; //addList에 입력된 값 가져오기
 
@@ -14,11 +18,14 @@ function addNew() {
   }
   total++; //addNew함수 불려질때마다 total값 증가시키기
 
-  var item = createItem(text, total, true);
+  var item = createItem(text, total, false);
   list.append(item); //todo list에 li태그를 붙여준다
 }
-
+function appendItem() {
+  //
+}
 function createItem(taskTitle, id, checked) {
+  //list 생성 함수 : 할일, id, 체크여부 인자로 받아옴
   var item = document.createElement("li"); // li태그 생성
   var check = document.createElement("input"); //input태그생성
   check.setAttribute("type", "checkbox"); //input type= checkbox로 설정
