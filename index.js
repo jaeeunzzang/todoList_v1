@@ -6,8 +6,8 @@ var data = [
 var total = data.length; //리스트 갯수. 아이디에 추가해줄 변수
 function appendItem() {
   //데이터 가져올때
-
   var checked = data.complete == true ? true : false; //체크여부
+  console.log(checked);
 }
 function addNew() {
   //새로 추가버튼 눌럿을때
@@ -22,7 +22,9 @@ function addNew() {
     document.getElementById("addList").value = ""; //input text 값은 초기화
   }
   console.log(data);
-  var item = createItem(text, total, false); //새로 추가니까 일단 false로 들어간다.
+  appendItem();
+
+  var item = createItem(text, total, false); //일단 새로 추가니까 false로 넣어준다
 
   list.append(item); //todo list에 li태그를 붙여준다
   showItem(data);
