@@ -1,0 +1,40 @@
+div#wrap {
+  position: relative;
+  border: 1px solid gray;
+  width: 50%;
+  margin: 0 25%;
+}
+
+div#container {
+  padding: 0 5%;
+}
+
+ul {
+  margin: 20px 0;
+  padding: 0;
+  list-style: none;
+}
+
+li > input[type="button"] {
+  float: right;
+}
+
+li {
+  padding: 5px 0;
+}
+
+input[type="button"] {
+  border-style: none;
+  background: white;
+}
+
+.delete:hover {
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.edit:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
