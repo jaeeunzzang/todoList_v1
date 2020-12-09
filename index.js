@@ -6,8 +6,8 @@ var data = [
 function addNew() {
   //추가버튼 눌럿을때
   //name, checked ->함수명: appendItem 체크가 된건지 안된건지만 중요,,...........
+  var list = document.getElementById("list"); //할 일 목록 (ul)
   var text = document.getElementById("addList").value; //addList에 입력된 값 가져오기
-
   if (text.length < 1) {
     //입력된 값이 없으면
     alert("할일을 입력하세요");
@@ -18,7 +18,13 @@ function addNew() {
   }
   total++; //addNew함수 불려질때마다 total값 증가시키기
 
-  var item = createItem(text, total, false);
+  if (data.complete == true) {
+    //data에서 완료여부 받아와서 체크박스 체크..
+    var checked = true;
+  } else {
+    checked = false;
+  }
+  var item = createItem(text, total, checked);
   list.append(item); //todo list에 li태그를 붙여준다
 }
 function appendItem() {
@@ -30,9 +36,8 @@ function createItem(taskTitle, id, checked) {
   var check = document.createElement("input"); //input태그생성
   check.setAttribute("type", "checkbox"); //input type= checkbox로 설정
   check.setAttribute("checked", checked);
-  var sp = document.createElement("span");
-  sp.innerText = taskTitle; //span태그 안에 text값을 textValue로 넣어준다
-  var list = document.getElementById("list");
+  var span = document.createElement("span");
+  span.innerText = taskTitle; //span태그 안에 text값을 textValue로 넣어준다
 
   var del = document.createElement("input"); //delete 버튼
   del.setAttribute("type", "button");
@@ -45,19 +50,14 @@ function createItem(taskTitle, id, checked) {
   edit.setAttribute("class", "edit");
 
   item.id = "li" + id; //id에 토탈값넣어서 구분할수있게 해준당
-  check.setAttribute("id", "ck" + id);
-  sp.id = "sp" + id;
-  del.id = "del" + id;
-  edit.id = "edit" + id;
-
-  item.append(check, sp, del, edit); //li태그안에 체크박스, span을 붙여준다
-
-  del.onclick = deleteList; //del클릭하면 deleteList함수실행
-  edit.onclick = editList;
-  check.onclick = updateList; //체크박스 클릭하면 updateList함수 실행
+  item.append(check, span, del, edit); //아이디 설정해준 li태그안에 체크박스, span, button을 붙여준다
 
   return item;
 }
+
+del.onclick = deleteList; //del클릭하면 deleteList함수실행
+edit.onclick = editList;
+check.onclick = updateList; //체크박스 클릭하면 updateList함수 실행
 
 function updateList() {
   //체크박스 누를때 줄그어주고 옮겨주고 하는 함수
