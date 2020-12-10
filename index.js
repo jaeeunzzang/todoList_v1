@@ -4,6 +4,7 @@ var data = [
 ];
 
 var total = data.length; //리스트 갯수. 아이디에 추가해줄 변수
+
 function appendItem() {
   //데이터 가져올때
   var checked = data.complete == true ? true : false; //체크여부
@@ -11,7 +12,6 @@ function appendItem() {
 }
 function addNew() {
   //새로 추가버튼 눌럿을때
-  var list = document.getElementById("list"); //할 일 목록 (ul)
   var text = document.getElementById("addList").value; //addList에 입력된 값 가져오기
   if (text.length < 1) {
     //입력된 값이 없으면
@@ -24,14 +24,23 @@ function addNew() {
   console.log(data);
   appendItem();
 
-  var item = createItem(text, total, false); //일단 새로 추가니까 false로 넣어준다
+  var item = createItem(text, total, false); //새로 추가니까 false로 넣어준다
+  showItem(item);
+}
+function searchItem() {
+  var searchList = document.getElementById("searchList").value; //searchList에 입력된 값 가져오기
+
+  var searchData = data.filter(function (n) {
+    n.title.match(searchList);
+  });
+  console.log(searchData);
+}
+function showItem(item) {
+  //data 출력해줄 함수 view
+  var list = document.getElementById("list"); //할 일 목록 (ul)
+  var completeList = document.getElementById("completeList"); //완료한 일 목록(ul)
 
   list.append(item); //todo list에 li태그를 붙여준다
-  showItem(data);
-}
-
-function showItem(data) {
-  //data 출력해줄 함수 view
 }
 
 function createItem(taskTitle, id, checked) {
