@@ -25,7 +25,8 @@ function addNew() {
   appendItem();
 
   var item = createItem(text, total, false); //새로 추가니까 false로 넣어준다
-  showItem(item);
+  //showItem(item);
+  showItem(data[0].title);
 }
 function searchItem() {
   var searchList = document.getElementById("searchList").value; //searchList에 입력된 값 가져오기
@@ -40,7 +41,10 @@ function showItem(item) {
   //data 출력해줄 함수 view
   var list = document.getElementById("list"); //할 일 목록 (ul)
   var completeList = document.getElementById("completeList"); //완료한 일 목록(ul)
-
+  if (item.checked == true) {
+    //checkbox가 체크되어있으면
+    completeList.append(item);
+  }
   list.append(item); //todo list에 li태그를 붙여준다
 }
 
