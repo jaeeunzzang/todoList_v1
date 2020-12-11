@@ -30,6 +30,7 @@ function addNew() {
 function searchItem() {
   var searchList = document.getElementById("searchList").value; //searchList에 입력된 값 가져오기
 
+  var title = data.title;
   var searchData = data.filter(function (n) {
     n.title.match(searchList);
   });
