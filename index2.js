@@ -20,102 +20,64 @@ function addNew() {
   var addList = document.getElementById("addList"); //추가할 일 input 태그
   var title = addList.value;
   var lastTask = data[data.length - 1]; //현재 마지막으로 들어있는 데이터 값
-  console.log(lastTask);
+  //console.log(lastTask);
   data.push({
     id: lastTask ? lastTask.id + 1 : 0,
     //마지막 데이터의 아이디값 +1. 들어있는 데이터가 없으면 아이디는 0으로 설정
     title: title,
     complete: false,
   });
-  addList.value = "";
+  console.log(data);
+  addList.value = ""; //입력값 초기화
+  showItem(data);
 }
 
-var searchButton = document.getElementById("search-btn");
-var searchInput = document.getElementById("search-task");
-searchButton.onclick = function () {
-  var query = searchInput.value;
-  showTasks(globalTasks.filter((t) => (query ? t.title.match(query) : true)));
-};
+function showItem(data) {
+  list.innerHTML = "";
+  completeList.innerHTML = "";
 
-function showTasks(tasks) {
-  // remove all tasks
-  incompleteTaskHolder.innerHTML = "";
-  completedTasksHolder.innerHTML = "";
+  var todo = data.filter((n) => !n.complete);
 
-  var incomplete = tasks.filter((t) => !t.completed);
-  var completed = tasks.filter((t) => t.completed);
+  var num = 0;
+  for (num; num <= data.length - 1; num++) {
+    console.log(data[num]);
 
-  var favorite = incomplete.filter((t) => t.favorite);
-  var notFavorite = incomplete.filter((t) => !t.favorite);
-  for (let t of favorite) {
-    incompleteTaskHolder.append(createNewTaskElement(t));
-  }
-  for (let t of notFavorite) {
-    incompleteTaskHolder.append(createNewTaskElement(t));
-  }
-
-  for (let t of completed) {
-    completedTasksHolder.append(createNewTaskElement(t));
+    if (data[num].complete == true) {
+      //data[n]번째가 완료된 일이면
+      var item = createItem(data[num]);
+      console.log(item); //<li><checkbox><span><button></li>
+      completeList.append(item);
+    } else {
+      console.log(createItem(data[num]));
+      list.append(createItem(data[num]));
+    }
   }
 }
 
-//New task list item
-function createNewTaskElement(task) {
-  var listItem = document.createElement("li");
+function createItem(taskItem) {
+  var li = document.createElement("li");
+  var span = document.createElement("span");
+  span.innerText = taskItem.title;
+  var checkbox = document.createElement("input");
+  checkbox.setAttribute("type", "checkbox");
+  var del = deleteButton();
 
-  //input (checkbox)
-  var checkBox = document.createElement("input"); //checkbx
-  checkBox.setAttribute("type", "checkbox");
-  checkBox.onclick = () => onClickCheckbox(task.id);
-  if (task.completed) {
-    checkBox.setAttribute("checked", true);
-  }
-  //label
-  var label = document.createElement("label"); //label
-  //button.edit
-  var favoriteButton = document.createElement("button"); //edit button
+  li.id = taskItem.id;
+  li.append(checkbox, span, del);
+  return li;
+}
+function deleteButton() {
+  var del = document.createElement("input"); //delete 버튼
+  del.setAttribute("type", "button");
+  del.setAttribute("value", "Del");
+  del.setAttribute("class", "delete"); //css
 
-  //button.delete
-  var deleteButton = document.createElement("button"); //delete button
-
-  label.innerText = task.title;
-
-  favoriteButton.innerText = "Favorite"; //innerText encodes special characters, HTML does not.
-
-  if (task.favorite) {
-    favoriteButton.className = "favorite";
-  }
-
-  favoriteButton.onclick = () => onClickFavorite(task.id);
-
-  deleteButton.innerText = "Delete";
-  deleteButton.className = "delete";
-  deleteButton.onclick = () => onClickDelete(task.id);
-
-  //and appending.
-  listItem.appendChild(checkBox);
-  listItem.appendChild(label);
-  listItem.appendChild(favoriteButton);
-  listItem.appendChild(deleteButton);
-  return listItem;
+  del.onclick = deleteList; //del클릭하면 deleteList함수실행
+  return del;
 }
 
-function onClickCheckbox(id) {
-  var task = globalTasks.find((t) => t.id === id);
-  task.completed = !task.completed;
-  showTasks(globalTasks);
+function deleteList() {
+  //리스트 삭제
+  var li = this.parentElement; //클릭한 deleteButton의 부모태그를 선택해서 지워준다(li)
+  li.remove();
 }
-
-function onClickFavorite(id) {
-  var task = globalTasks.find((t) => t.id === id);
-  task.favorite = !task.favorite;
-  showTasks(globalTasks);
-}
-
-function onClickDelete(id) {
-  var tasks = globalTasks.filter((t) => t.id !== id);
-  globalTasks = tasks;
-  showTasks(globalTasks);
-}
-
-showTasks(globalTasks);
