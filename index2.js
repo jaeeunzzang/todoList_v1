@@ -7,10 +7,13 @@ var data = [
 var list = document.getElementById("list"); //할 일 목록 (ul)
 var completeList = document.getElementById("completeList"); //완료한 일 목록(ul)
 var total = data.length; //리스트 갯수. 아이디에 추가해줄 변수
-var addButton = document.getElementById("addButton"); //추가버튼
 
 showItem(data); //data에 들어있는거 출력해주면서 시작
-
+function searchItem() {
+  var searchList = document.getElementById("searchList");
+  var searchData = searchList.value;
+  console.log(searchData);
+}
 function addNew() {
   //새 할일 추가
   var addList = document.getElementById("addList"); //추가할 일 input 태그
