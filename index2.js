@@ -12,7 +12,11 @@ showItem(data); //data에 들어있는거 출력해주면서 시작
 function searchItem() {
   var searchList = document.getElementById("searchList");
   var searchData = searchList.value;
-  console.log(searchData);
+  //console.log(searchData);
+  var searchItem = data.filter((n) => n.title.match(searchData));
+  // console.log(searchItem);
+  showItem(searchItem);
+  searchList.value = "";
 }
 function addNew() {
   //새 할일 추가
