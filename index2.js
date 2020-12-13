@@ -57,7 +57,6 @@ function createItem(taskItem) {
   checkbox.checked
     ? (span.style.textDecoration = "line-through")
     : (span.style.textDecoration = "none");
-
   li.id = taskItem.id;
   li.append(checkbox, span, del);
 
@@ -65,12 +64,16 @@ function createItem(taskItem) {
 }
 function checkboxClick() {
   var thisData = this.parentElement;
+  var span = thisData.children[1];
   console.log(thisData);
+
   if (this.checked) {
     //체크가 되면
-    //data.complete = true; data에 접근하는 방법..??
+    //data의 complete를 true로 바꿔줘야대는데 ..????
+    span.style.textDecoration = "line-through";
     completeList.append(thisData);
   } else {
+    span.style.textDecoration = "none";
     list.append(thisData);
   }
 }
